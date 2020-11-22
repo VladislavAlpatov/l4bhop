@@ -4,6 +4,7 @@
 
 DWORD WINAPI HackThread(HMODULE hModule)
 {
+    std::string hash = "write here some randome stuff";
     AllocConsole();
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
