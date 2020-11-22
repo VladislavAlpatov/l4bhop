@@ -19,4 +19,4 @@ You can download plugin from [here](https://mega.nz/file/8NchEaoY#pY-m4x-HYrZn35
 
 ## Community
 
-Our [telegram group](t.me/LittleSoftwareStudio)
+Our [telegram group](https://t.me/LittleSoftwareStudio)
