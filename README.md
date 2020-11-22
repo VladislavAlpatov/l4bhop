@@ -8,7 +8,7 @@ The software could be detected by VAC in the future. Only use it on accounts you
 
 ## Overview
 
-Left 4 Bhop is a training software designed for Left 4 Dead 2 for Linux.
+Left 4 Bhop is a training software designed for Left 4 Dead 2 for Windows.
 
 * Dll using for high speed.
 * Plugin can be used in online games
