@@ -15,4 +15,8 @@ Left 4 Bhop is a training software designed for Left 4 Dead 2 for Linux.
 
 ## Downdload
 
-You can download plugin from [here](link)
+You can download plugin from [here](https://mega.nz/file/8NchEaoY#pY-m4x-HYrZn35Vw4hvI881rZ0n-QHveu4l3rT1ZqvI).
+
+## Community
+
+Our [telegram group](t.me/LittleSoftwareStudio)
