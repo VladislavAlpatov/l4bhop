@@ -6,7 +6,7 @@ Free Left 4 Dead bhop plugin.
 
 ## Risk of VAC detection
 
-The software could be detected by VAC in the future. Only use it on accounts you won't regret getting VAC banned.
+The software could be detected by [VAC](https://en.wikipedia.org/wiki/Valve_Anti-Cheat) in the future. Only use it on accounts you won't regret getting VAC banned.
 
 ## Overview
 
