@@ -10,14 +10,10 @@ DWORD WINAPI HackThread(HMODULE hModule)
     freopen_s(&f, "CONOUT$", "w", stdout);
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
-    printf("   __   ________\n");
-    printf("  / /  / __/ __/\n");
-    printf(" / /___\\ \\_\\ \\ \n");
-    printf("/____/___/___/  \n");
-
     SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY);
     printf("(C) Little Software Studio\n");
+    SetConsoleTextAttribute(hConsole, FOREGROUND_GREEN);
+    printf("READY!\n");
 
     Sleep(2000);
     fclose(f);
@@ -42,10 +38,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
 
 
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                     )
+BOOL APIENTRY DllMain(HMODULE hModule,DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
     switch (ul_reason_for_call)
     {
@@ -58,4 +51,3 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
-
