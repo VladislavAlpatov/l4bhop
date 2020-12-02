@@ -1,6 +1,6 @@
 ﻿#include <Windows.h>
 #include <iostream>
-
+#include "l4d2.h"
 
 DWORD WINAPI HackThread(HMODULE hModule)
 {
@@ -8,22 +8,24 @@ DWORD WINAPI HackThread(HMODULE hModule)
     AllocConsole();
     FILE* f;
     freopen_s(&f, "CONOUT$", "w", stdout);
+ 
     printf("(C) Little Software Studio\n");
 
     Sleep(2000);
     fclose(f);
     FreeConsole();
-
     DWORD moduleBase = (DWORD)GetModuleHandle(L"client.dll");
 
     while (!GetAsyncKeyState(VK_END))
     {
-        int on_ground = *(int*)(moduleBase + 0x7615B8);
-        if (GetAsyncKeyState(VK_SPACE) and on_ground)
+        DWORD localplayer = *(DWORD*)(moduleBase + signatures::dwLocalPlayer);
+        int m_flags = *(int*)(localplayer + signatures::m_Flags);
+
+        if (GetAsyncKeyState(VK_SPACE) and m_flags == FL_ONGROUND or m_flags == FL_ONGROUND_DUCK)
         {
-            *(int*)(moduleBase + 0x739948) = 5;
+            *(int*)(moduleBase + signatures::dwForceJump) = 5;
             Sleep(1);
-            *(int*)(moduleBase + 0x739948) = 4;
+            *(int*)(moduleBase + signatures::dwForceJump) = 4;
         }
     }
 
