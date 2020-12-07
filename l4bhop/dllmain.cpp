@@ -29,11 +29,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
                 switch (m_flags)
                 {
+
                 case FL_ONGROUND:
-                    *(int*)(moduleBase + signatures::dwForceJump) = 5;
-                    Sleep(1);
-                    *(int*)(moduleBase + signatures::dwForceJump) = 4;
-                    break;
 
                 case FL_ONGROUND_DUCK:
                     *(int*)(moduleBase + signatures::dwForceJump) = 5;
