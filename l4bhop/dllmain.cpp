@@ -14,21 +14,36 @@ DWORD WINAPI HackThread(HMODULE hModule)
     Sleep(2000);
     fclose(f);
     FreeConsole();
+
     DWORD moduleBase = (DWORD)GetModuleHandle(L"client.dll");
 
     while (!GetAsyncKeyState(VK_END))
     {
-        DWORD localplayer = *(DWORD*)(moduleBase + signatures::dwLocalPlayer);
-        int m_flags = *(int*)(localplayer + signatures::m_Flags);
-
-        if (GetAsyncKeyState(VK_SPACE) and m_flags == FL_ONGROUND or m_flags == FL_ONGROUND_DUCK)
+        if (GetAsyncKeyState(VK_SPACE))
         {
-            *(int*)(moduleBase + signatures::dwForceJump) = 5;
-            Sleep(1);
-            *(int*)(moduleBase + signatures::dwForceJump) = 4;
+            DWORD localplayer = *(DWORD*)(moduleBase + signatures::dwLocalPlayer);
+
+            if (localplayer != NULL)
+            {
+                int m_flags = *(int*)(localplayer + signatures::m_Flags);
+
+                switch (m_flags)
+                {
+                case FL_ONGROUND:
+                    *(int*)(moduleBase + signatures::dwForceJump) = 5;
+                    Sleep(1);
+                    *(int*)(moduleBase + signatures::dwForceJump) = 4;
+                    break;
+
+                case FL_ONGROUND_DUCK:
+                    *(int*)(moduleBase + signatures::dwForceJump) = 5;
+                    Sleep(1);
+                    *(int*)(moduleBase + signatures::dwForceJump) = 4;
+                    break;
+                }
+            }
         }
     }
-
     FreeLibraryAndExitThread(hModule, 0);
     return 0;
 }
