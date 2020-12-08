@@ -6,8 +6,8 @@
 
 namespace signatures
 {
-	DWORD dwLocalPlayer = 0x7094d8;
+	DWORD dwLocalPlayer = 0x709558;
 	DWORD m_Flags = 0xF0;
-	DWORD dwForceJump = 0x739948;
+	DWORD dwForceJump = 0x7399C8;
 	DWORD m_Health = 0xec;
 }
