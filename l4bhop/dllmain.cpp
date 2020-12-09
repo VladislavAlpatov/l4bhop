@@ -31,6 +31,10 @@ DWORD WINAPI HackThread(HMODULE hModule)
                 {
 
                 case FL_ONGROUND:
+                
+                case FL_ONGOUND_IN_WATHER:
+
+                case FL_ONGOUND_IN_WATHER_DUCK:
 
                 case FL_ONGROUND_DUCK:
                     *(int*)(moduleBase + signatures::dwForceJump) = 5;

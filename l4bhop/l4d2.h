@@ -3,7 +3,8 @@
 
 #define FL_ONGROUND 129
 #define FL_ONGROUND_DUCK 131
-
+#define FL_ONGOUND_IN_WATHER 641
+#define FL_ONGOUND_IN_WATHER_DUCK 643
 namespace signatures
 {
 	DWORD dwLocalPlayer = 0x709558;
