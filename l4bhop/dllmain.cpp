@@ -2,6 +2,9 @@
 #include <iostream>
 #include "l4d2.h"
 
+#include "LocalPlayer.h"
+#include "Client.h"
+
 DWORD WINAPI HackThread(HMODULE hModule)
 {
 
@@ -11,33 +14,37 @@ DWORD WINAPI HackThread(HMODULE hModule)
  
     printf("(C) Little Software Studio\n");
 
-    Sleep(2000);
+    Sleep(3000);
+
     fclose(f);
     FreeConsole();
 
     DWORD moduleBase = (DWORD)GetModuleHandle(L"client.dll");
+    Client* client = (Client*)(moduleBase);
 
     while (!GetAsyncKeyState(VK_END))
     {
         if (GetAsyncKeyState(VK_SPACE))
         {
-            DWORD localplayer = *(DWORD*)(moduleBase + signatures::dwLocalPlayer);
-
-            if (localplayer != NULL)
+            __try
             {
-                int m_flags = *(int*)(localplayer + signatures::m_Flags);
+                LocalPlayer* localplayer = *(LocalPlayer**)(moduleBase + offsets::dwLocalPlayer);
 
-                switch (m_flags)
+                switch (localplayer->m_iFlags)
                 {
 
                 case FL_ONGROUND:
                 case FL_ONGOUND_IN_WATHER:
                 case FL_ONGOUND_IN_WATHER_DUCK:
                 case FL_ONGROUND_DUCK:
-                    *(int*)(moduleBase + signatures::dwForceJump) = 6;
+                    client->ForceJump = 6;
                     Sleep(1);
                     break;
                 }
+            }
+            __except (EXCEPTION_EXECUTE_HANDLER)
+            {
+
             }
         }
     }
