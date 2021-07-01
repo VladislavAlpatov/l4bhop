@@ -24,29 +24,25 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
     while (!GetAsyncKeyState(VK_END))
     {
-        if (GetAsyncKeyState(VK_SPACE))
+        LocalPlayer* localplayer = *(LocalPlayer**)(moduleBase + offsets::dwLocalPlayer);
+
+        if (!GetAsyncKeyState(VK_SPACE))
         {
-            __try
-            {
-                LocalPlayer* localplayer = *(LocalPlayer**)(moduleBase + offsets::dwLocalPlayer);
-
-                switch (localplayer->m_iFlags)
-                {
-
-                case FL_ONGROUND:
-                case FL_ONGOUND_IN_WATHER:
-                case FL_ONGOUND_IN_WATHER_DUCK:
-                case FL_ONGROUND_DUCK:
-                    client->ForceJump = 6;
-                    Sleep(1);
-                    break;
-                }
-            }
-            __except (EXCEPTION_EXECUTE_HANDLER)
-            {
-
-            }
+            Sleep(10);
         }
+        else if ((localplayer->m_iFlags == FL_ONGROUND || localplayer->m_iFlags == FL_ONGROUND_DUCK || localplayer->m_iFlags == FL_ONGOUND_IN_WATHER || localplayer->m_iFlags == FL_ONGOUND_IN_WATHER_DUCK))
+        {
+            client->ForceJump = 5;
+            Sleep(50);
+            client->ForceJump = 4;
+
+        }
+        else if (localplayer->m_iFlags == 128 && client->ForceJump == 5)
+        {
+            client->ForceJump = 4;
+        }
+
+
     }
     FreeLibraryAndExitThread(hModule, 0);
     return 0;
