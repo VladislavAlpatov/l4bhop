@@ -16,7 +16,7 @@ Left 4 Bhop is a training software designed for Left 4 Dead 2 for Windows.
 * Plugin can be used in online games.
 * Press end key to unload plugin.
 * Use [dll injector](https://processhacker.sourceforge.io/downloads.php) to load plugin.
-## Downdload
+## Download
 
 You can download plugin from [here](https://github.com/VladislavAlpatov/l4bhop/releases/).
 
