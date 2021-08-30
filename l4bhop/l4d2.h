@@ -13,7 +13,7 @@
 
 namespace offsets
 {
-	const DWORD dwLocalPlayer = 0x71A5D8;
+	const DWORD dwLocalPlayer = 0x7B4BB0;
 	const DWORD m_Flags = 0xF0;
 	const DWORD dwForceJump = 0x74AA48;
 	const DWORD m_Health = 0xec;

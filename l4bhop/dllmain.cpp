@@ -24,7 +24,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
             client->ForceJump = 4;
 
         }
-        else if ( (localplayer->m_iFlags == 128 or localplayer->m_iFlags == 130) and client->ForceJump == 5)
+        else if ( localplayer->m_iFlags == 130 and client->ForceJump == 5)
         {
             client->ForceJump = 4;
         }
