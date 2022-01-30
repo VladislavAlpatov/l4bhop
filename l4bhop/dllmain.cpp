@@ -2,40 +2,50 @@
 #include "l4d2.h"
 #include "LocalPlayer.h"
 #include "Client.h"
+#include <MinHook.h>
+Client* clientBaseAddr = (Client*)GetModuleHandle(L"client.dll");
+LPVOID oCreateMove = nullptr;
+
+int __stdcall hCreateMove(float a1, int a2)
+{
+    typedef bool(__stdcall* tCreateMove)(int, int);
+
+    LocalPlayer* localplayer = clientBaseAddr->m_pLocalPlayer;
+
+    if ( not GetAsyncKeyState(VK_SPACE) or clientBaseAddr->m_pLocalPlayer == nullptr)
+    {
+        return reinterpret_cast<tCreateMove>(oCreateMove)(a1, a2);
+    }
+    else if ((localplayer->m_iFlags == FL_ONGROUND or localplayer->m_iFlags == FL_ONGROUND_DUCK or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER_DUCK))
+    {
+        clientBaseAddr->m_iForceJump = 6;
+    }
+    else if (clientBaseAddr->m_iForceJump == 5)
+    {
+        clientBaseAddr->m_iForceJump = 4;
+    }
+
+
+    return reinterpret_cast<tCreateMove>(oCreateMove)(a1, a2);
+}
 
 DWORD WINAPI HackThread(HMODULE hModule)
 {
     MessageBeep(MB_ICONINFORMATION);
-    DWORD moduleBase = (DWORD)GetModuleHandle(L"client.dll");
-    Client* client = (Client*)(moduleBase);
-
+    MH_Initialize();
+    MH_CreateHook((LPVOID)((uintptr_t)(clientBaseAddr) + 0xC0920), hCreateMove, &oCreateMove);
+    MH_EnableHook(MH_ALL_HOOKS);
     while (!GetAsyncKeyState(VK_END))
     {
-        LocalPlayer* localplayer = *(LocalPlayer**)(moduleBase + offsets::dwLocalPlayer);
-
-        if (!GetAsyncKeyState(VK_SPACE))
-        {
-            Sleep(10);
-        }
-        else if ((localplayer->m_iFlags == FL_ONGROUND or localplayer->m_iFlags == FL_ONGROUND_DUCK or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER_DUCK))
-        {
-            client->ForceJump = 5;
-            Sleep(50);
-            client->ForceJump = 4;
-
-        }
-        else if ( localplayer->m_iFlags == 128 and client->ForceJump == 5)
-        {
-            client->ForceJump = 4;
-        }
-
-
+        Sleep(100);
     }
+    MH_RemoveHook(MH_ALL_HOOKS);
+    MH_Uninitialize();
     FreeLibraryAndExitThread(hModule, 0);
     return 0;
 }
 
-
+// C0920
 
 BOOL APIENTRY DllMain(HMODULE hModule,DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
