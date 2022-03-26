@@ -33,7 +33,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
 {
     MessageBeep(MB_ICONINFORMATION);
     MH_Initialize();
-    MH_CreateHook((LPVOID)((uintptr_t)(clientBaseAddr) + 0xC0920), hCreateMove, &oCreateMove);
+    MH_CreateHook((LPVOID)((uintptr_t)(clientBaseAddr) + 0xC2D30), hCreateMove, &oCreateMove);
     MH_EnableHook(MH_ALL_HOOKS);
     while (!GetAsyncKeyState(VK_END))
     {
