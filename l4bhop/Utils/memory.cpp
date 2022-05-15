@@ -27,7 +27,7 @@ SPattern CMemory::ParsePattern(const std::string& str)
 {
 	auto pattern = SPattern();
 	std::vector<std::string> strs;
-
+	
 	boost::split(strs, str, boost::is_any_of(" "));
 	
 	for (auto& strHex : strs)
