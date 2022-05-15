@@ -3,6 +3,9 @@
 #include "LocalPlayer.h"
 #include "Client.h"
 #include <MinHook.h>
+#include "Utils/memory.h"
+
+
 Client* clientBaseAddr = (Client*)GetModuleHandle(L"client.dll");
 LPVOID oCreateMove = nullptr;
 
@@ -31,10 +34,11 @@ int __stdcall hCreateMove(float a1, int a2)
 
 DWORD WINAPI HackThread(HMODULE hModule)
 {
-    MessageBeep(MB_ICONINFORMATION);
     MH_Initialize();
-    MH_CreateHook((LPVOID)((uintptr_t)(clientBaseAddr) + 0xC2D30), hCreateMove, &oCreateMove);
+
+    MH_CreateHook((LPVOID)CMemory::FindPattern("client.dll", "55 8B EC 6A FF E8 ?? ?? ?? ?? 83 C4 04 85 C0 75 06 B0 01"), hCreateMove, &oCreateMove);
     MH_EnableHook(MH_ALL_HOOKS);
+    MessageBeep(MB_ICONINFORMATION);
     while (!GetAsyncKeyState(VK_END))
     {
         Sleep(100);
