@@ -36,7 +36,7 @@ DWORD WINAPI HackThread(HMODULE hModule)
 {
     MH_Initialize();
 
-    MH_CreateHook((LPVOID)CMemory::FindPattern("client.dll", "55 8B EC 6A FF E8 ?? ?? ?? ?? 83 C4 04 85 C0 75 06 B0 01"), hCreateMove, &oCreateMove);
+    MH_CreateHook((LPVOID)Memory::FindPattern("client.dll", "55 8B EC 6A FF E8 ?? ?? ?? ?? 83 C4 04 85 C0 75 06 B0 01"), hCreateMove, &oCreateMove);
     MH_EnableHook(MH_ALL_HOOKS);
     MessageBeep(MB_ICONINFORMATION);
     while (!GetAsyncKeyState(VK_END))
