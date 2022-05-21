@@ -14,9 +14,9 @@ MODULEINFO GetModuleInfo(const char* szModule)
 	return modinfo;
 }
 
-BYTE StrHexToByte(const std::string& str)
+UINT StrHexToByte(const std::string& str)
 {
-	BYTE iOutNumber;
+	UINT iOutNumber;
 	std::stringstream ss;
 	ss << std::hex << str;
 	ss >> iOutNumber;
