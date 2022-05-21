@@ -14,9 +14,9 @@ MODULEINFO GetModuleInfo(const char* szModule)
 	return modinfo;
 }
 
-unsigned int HexdecimalStringToInt(const std::string& str)
+BYTE StrHexToByte(const std::string& str)
 {
-	unsigned int iOutNumber;
+	BYTE iOutNumber;
 	std::stringstream ss;
 	ss << std::hex << str;
 	ss >> iOutNumber;
@@ -37,7 +37,7 @@ std::vector<BYTE> GetSignatureBytes(const std::string& str)
 			continue;
 		}
 
-		bytes.push_back(HexdecimalStringToInt(strHex));
+		bytes.push_back(StrHexToByte(strHex));
 
 	}
 
