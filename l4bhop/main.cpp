@@ -5,27 +5,25 @@
 #include <MinHook.h>
 #include "Utils/memory.h"
 
-
-Client* clientBaseAddr = (Client*)GetModuleHandle(L"client.dll");
 LPVOID oCreateMove = nullptr;
 
 int __stdcall hCreateMove(float a1, int a2)
 {
     typedef bool(__stdcall* tCreateMove)(int, int);
 
-    LocalPlayer* localplayer = clientBaseAddr->m_pLocalPlayer;
-
-    if ( not GetAsyncKeyState(VK_SPACE) or clientBaseAddr->m_pLocalPlayer == nullptr)
+    LocalPlayer* localplayer = SSDK::GetLocalPLayer();
+    auto pFoceJmp = SSDK::GetForceJump();
+    if ( not GetAsyncKeyState(VK_SPACE) or localplayer == nullptr)
     {
         return reinterpret_cast<tCreateMove>(oCreateMove)(a1, a2);
     }
     else if ((localplayer->m_iFlags == FL_ONGROUND or localplayer->m_iFlags == FL_ONGROUND_DUCK or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER_DUCK))
     {
-        clientBaseAddr->m_iForceJump = 6;
+        *pFoceJmp = 6;
     }
-    else if (clientBaseAddr->m_iForceJump == 5)
+    else if (*pFoceJmp == 5)
     {
-        clientBaseAddr->m_iForceJump = 4;
+        *pFoceJmp = 4;
     }
 
 

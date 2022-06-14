@@ -31,7 +31,7 @@ std::vector<BYTE> GetSignatureBytes(const std::string& str)
 
 	for (auto& strHex : strs)
 	{
-		if (strHex == "??")
+		if (strHex == "??" or strHex == "?")
 		{
 			bytes.push_back('\?');
 			continue;
@@ -57,7 +57,7 @@ uintptr_t Memory::FindPattern(const char* moduleName, const char* signature)
 		bool found = true;
 		for (uintptr_t j = 0; j < pattern.size(); j++)
 		{
-			found &= pattern[j] == '\?' || pattern[j] == *(BYTE*)(base + i + j);
+			found = pattern[j] == '\?' || pattern[j] == *(BYTE*)(base + i + j);
 			if (not found)
 				break;
 		}

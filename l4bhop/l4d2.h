@@ -19,3 +19,4 @@ namespace offsets
 	const DWORD m_Health = 0xec;
 	const DWORD m_iVel = 0x100;
 }
+
