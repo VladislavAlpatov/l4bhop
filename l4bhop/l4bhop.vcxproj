@@ -173,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
-    <ClInclude Include="l4d2.h" />
     <ClInclude Include="LocalPlayer.h" />
     <ClInclude Include="Utils\memory.h" />
     <ClInclude Include="Vec3.h" />

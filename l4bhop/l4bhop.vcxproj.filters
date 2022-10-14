@@ -23,9 +23,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="l4d2.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="LocalPlayer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>

@@ -1,5 +1,4 @@
 ﻿#include <Windows.h>
-#include "l4d2.h"
 #include "LocalPlayer.h"
 #include "Client.h"
 #include <MinHook.h>
@@ -7,27 +6,20 @@
 
 LPVOID oCreateMove = nullptr;
 
-int __stdcall hCreateMove(float a1, int a2)
+
+
+int __stdcall hCreateMove(float a1, SSDK::CUserCmd* pUserCmd)
 {
-    typedef bool(__stdcall* tCreateMove)(int, int);
+	const LocalPlayer* pLocalPlayer = SSDK::GetLocalPLayer();
 
-    LocalPlayer* localplayer = SSDK::GetLocalPLayer();
-    auto pFoceJmp = SSDK::GetForceJump();
-    if ( not GetAsyncKeyState(VK_SPACE) or localplayer == nullptr)
-    {
-        return reinterpret_cast<tCreateMove>(oCreateMove)(a1, a2);
-    }
-    else if ((localplayer->m_iFlags == FL_ONGROUND or localplayer->m_iFlags == FL_ONGROUND_DUCK or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER or localplayer->m_iFlags == FL_ONGOUND_IN_WATHER_DUCK))
-    {
-        *pFoceJmp = 6;
-    }
-    else if (*pFoceJmp == 5)
-    {
-        *pFoceJmp = 4;
-    }
+    if (pLocalPlayer == nullptr)
+		return false;
 
 
-    return reinterpret_cast<tCreateMove>(oCreateMove)(a1, a2);
+    if (!(pLocalPlayer->m_iFlags & 1))
+        pUserCmd->m_iButtons &= ~SSDK::CUserCmd::IN_JUMP;
+
+    return false;
 }
 
 DWORD WINAPI HackThread(HMODULE hModule)
@@ -51,14 +43,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
 
 BOOL APIENTRY DllMain(HMODULE hModule,DWORD  ul_reason_for_call, LPVOID lpReserved)
 {
-    switch (ul_reason_for_call)
-    {
-    case DLL_PROCESS_ATTACH:
+
+    if (ul_reason_for_call == DLL_PROCESS_ATTACH)
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)HackThread, hModule, 0, nullptr);
-    case DLL_THREAD_ATTACH:
-    case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:
-        break;
-    }
     return TRUE;
 }
