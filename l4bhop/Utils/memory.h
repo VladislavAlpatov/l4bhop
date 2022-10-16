@@ -1,8 +1,6 @@
 #pragma once
 #include <Windows.h>
-#include <Psapi.h>
-#include <string>
-#include <vector>
+
 
 namespace Memory
 {

@@ -1,7 +1,6 @@
-#pragma once
 #include "memory.h"
-#include <sstream>
-#include <boost/algorithm/string.hpp>
+#include <Psapi.h>
+#include <vector>
 
 MODULEINFO GetModuleInfo(const char* szModule)
 {
@@ -13,32 +12,35 @@ MODULEINFO GetModuleInfo(const char* szModule)
 	GetModuleInformation(GetCurrentProcess(), hModule, &modinfo, sizeof(MODULEINFO));
 	return modinfo;
 }
-
-UINT StrHexToByte(const std::string& str)
+BYTE GetBit(char chr)
 {
-	UINT iOutNumber;
-	std::stringstream ss;
-	ss << std::hex << str;
-	ss >> iOutNumber;
-	return iOutNumber;
+	chr = tolower(chr);
+
+	if ('a' <= chr and chr <= 'z')
+		return chr - 'a' + 10;
+	return chr - '0';
+
 }
-
-std::vector<BYTE> GetSignatureBytes(const std::string& str)
+std::vector<BYTE> GetSignatureBytes(const char* str)
 {
-	std::vector<std::string> strs;
 	std::vector<BYTE> bytes;
-	boost::split(strs, str, boost::is_any_of(" "));
+	const auto length = strlen(str);
 
-	for (auto& strHex : strs)
+	for (size_t i = 0; i < length;)
 	{
-		if (strHex == "??" or strHex == "?")
+		if (str[i] == ' ')
 		{
-			bytes.push_back('\?');
+			i += 1;
 			continue;
 		}
-
-		bytes.push_back(StrHexToByte(strHex));
-
+		if (str[i] == '?')
+		{
+			bytes.push_back('\?');
+			(str[i + 1] == '?') ? i += 2 : i++;
+			continue;
+		}
+		bytes.push_back( GetBit(str[i]) * 16 + GetBit(str[i + 1]) );
+		i += 2;
 	}
 
 	return bytes;
@@ -47,10 +49,10 @@ std::vector<BYTE> GetSignatureBytes(const std::string& str)
 uintptr_t Memory::FindPattern(const char* moduleName, const char* signature)
 {
 	MODULEINFO mInfo = GetModuleInfo(moduleName);
-	uintptr_t base = (uintptr_t)mInfo.lpBaseOfDll;
-	uintptr_t size = (uintptr_t)mInfo.SizeOfImage;
+	const auto base = (uintptr_t)mInfo.lpBaseOfDll;
+	const auto size = (uintptr_t)mInfo.SizeOfImage;
 
-	auto pattern = GetSignatureBytes(signature);
+	const auto pattern = GetSignatureBytes(signature);
 
 	for (uintptr_t i = 0; i < size - pattern.size(); i++)
 	{

@@ -1,4 +1,5 @@
-﻿#include <Windows.h>
+﻿#include <climits>
+#include <Windows.h>
 #include "LocalPlayer.h"
 #include "Client.h"
 #include <MinHook.h>
@@ -6,10 +7,9 @@
 
 LPVOID oCreateMove = nullptr;
 
-
-
 int __stdcall hCreateMove(float a1, SSDK::CUserCmd* pUserCmd)
 {
+
 	const LocalPlayer* pLocalPlayer = SSDK::GetLocalPLayer();
 
     if (pLocalPlayer == nullptr)
@@ -19,6 +19,8 @@ int __stdcall hCreateMove(float a1, SSDK::CUserCmd* pUserCmd)
     if (!(pLocalPlayer->m_iFlags & 1))
         pUserCmd->m_iButtons &= ~SSDK::CUserCmd::IN_JUMP;
 
+    if (GetAsyncKeyState(VK_SHIFT))
+        pUserCmd->m_iTickCount = 1677721;
     return false;
 }
 
@@ -31,7 +33,8 @@ DWORD WINAPI HackThread(HMODULE hModule)
     MessageBeep(MB_ICONINFORMATION);
     while (!GetAsyncKeyState(VK_END))
     {
-        Sleep(100);
+
+        Sleep(50);
     }
     MH_RemoveHook(MH_ALL_HOOKS);
     MH_Uninitialize();
