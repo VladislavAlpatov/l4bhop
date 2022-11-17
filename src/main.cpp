@@ -5,6 +5,8 @@
 #include "SDK/CUserCmd.h"
 #include <MinHook.h>
 #include <d3d9.h>
+
+
 LPVOID oCreateMove = nullptr;
 
 int __stdcall hCreateMove(float a1, sdk::CUserCmd* pUserCmd)
@@ -44,11 +46,15 @@ DWORD WINAPI HackThread(HMODULE hModule)
 }
 
 
-BOOL WINAPI DllMain(const HMODULE hModule, const DWORD dwReason, LPVOID lpReserved)
+extern "C" BOOL WINAPI DllMain(
+	HINSTANCE hinstDLL,
+	DWORD fdwReason,
+	LPVOID lpvReserved
+)
 {
-    if (dwReason == DLL_PROCESS_ATTACH)
+    if (fdwReason == DLL_PROCESS_ATTACH)
     {
-        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)HackThread, hModule, 0, nullptr);
+        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)HackThread, hinstDLL, 0, nullptr);
     }
     return TRUE;
 }

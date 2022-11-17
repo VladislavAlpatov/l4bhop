@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 
-add_compile_options(-Ofast)
-
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_SHARED_MODULE_PREFIX "")
 
 project(l4bhop)
 
 add_library(l4bhop MODULE src/main.cpp)
+set(CMAKE_SHARED_MODULE_PREFIX "")
 
 add_subdirectory(src/utils)
 add_subdirectory(src/SDK)
