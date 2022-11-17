@@ -1,4 +1,0 @@
-cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -G Ninja -DCMAKE_MAKE_PROGRAM=ninja -DCMAKE_TOOLCHAIN_FILE=C:/Users/Vlad/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x86-mingw-static -S C:\Users\Vlad\Documents\l4bhop -B C:\Users\Vlad\Documents\l4bhop\cmake-build-debug-system
--- Configuring done
--- Generating done
--- Build files have been written to: C:/Users/Vlad/Documents/l4bhop/cmake-build-debug-system

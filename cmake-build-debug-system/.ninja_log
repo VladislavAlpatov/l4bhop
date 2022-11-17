@@ -1,7 +1,0 @@
-# ninja log v5
-1	5	0	clean	fabc6dee9eba1b42
-6	512	6903748933427980	CMakeFiles/l4bhop.dir/src/SDK/CLocalPlayer.cpp.obj	abb60bb8982a92ce
-4	569	6903748933986155	CMakeFiles/l4bhop.dir/src/main.cpp.obj	e5954467d2907b47
-5	731	6903748935621769	CMakeFiles/l4bhop.dir/src/utils/memory.cpp.obj	11ed368f5c3f16df
-732	1504	6903748936659303	l4bhop.dll	e69d1ae1aedb1fe2
-2	119	6903751529875224	build.ninja	6e0421a3dc4da0aa
