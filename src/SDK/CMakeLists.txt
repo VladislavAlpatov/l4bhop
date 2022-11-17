@@ -1,0 +1,1 @@
+target_sources(l4bhop PRIVATE CLocalPlayer.cpp)
