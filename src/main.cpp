@@ -4,7 +4,7 @@
 #include "SDK/CLocalPlayer.h"
 #include "SDK/CUserCmd.h"
 #include <MinHook.h>
-
+#include <d3d9.h>
 LPVOID oCreateMove = nullptr;
 
 int __stdcall hCreateMove(float a1, sdk::CUserCmd* pUserCmd)
@@ -14,7 +14,7 @@ int __stdcall hCreateMove(float a1, sdk::CUserCmd* pUserCmd)
     if (pLocalPlayer == nullptr)
         return false;
 
-    if (!(pLocalPlayer->m_iFlags & 1))
+    if (!(pLocalPlayer->m_iFlags & FL_ONGROUND))
         pUserCmd->m_iButtons &= ~sdk::CUserCmd::IN_JUMP;
 
     if (GetAsyncKeyState(VK_SHIFT))
