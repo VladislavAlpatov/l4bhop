@@ -3,8 +3,8 @@
 #include "utils/xorstr.h"
 #include "SDK/CLocalPlayer.h"
 #include "SDK/CUserCmd.h"
-#include <MinHook.h>
 #include <d3d9.h>
+#include <MinHook.h>
 
 
 LPVOID oCreateMove = nullptr;
@@ -31,7 +31,9 @@ DWORD WINAPI HackThread(HMODULE hModule)
         Sleep(50);
 
     MH_Initialize();
-    MH_CreateHook((LPVOID)memory::FindPattern(xorstr("client.dll"), xorstr("55 8B EC 6A FF E8 ?? ?? ?? ?? 83 C4 04 85 C0 75 06 B0 01")), (void*)(hCreateMove), &oCreateMove);
+    const auto pCreateMove = memory::FindPattern(xorstr("client.dll"), xorstr("55 8B EC 6A FF E8 ?? ?? ?? ?? 83 C4 04 85 C0 75 06 B0 01"));
+
+    MH_CreateHook((LPVOID)pCreateMove, (void*)hCreateMove, &oCreateMove);
 
     MH_EnableHook(MH_ALL_HOOKS);
     MessageBeep(MB_ICONINFORMATION);
