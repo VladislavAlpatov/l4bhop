@@ -18,3 +18,4 @@ add_subdirectory(src/SDK)
 
 find_package(minhook CONFIG REQUIRED)
 target_link_libraries(l4bhop PRIVATE minhook::minhook)
+target_link_libraries(l4bhop PRIVATE d3dx9)
