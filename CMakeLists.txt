@@ -13,11 +13,9 @@ add_subdirectory(src/SDK)
 
 find_package(minhook CONFIG REQUIRED)
 target_link_libraries(l4bhop PRIVATE minhook::minhook)
-target_link_libraries(l4bhop PRIVATE d3dx9)
 
 
 link_directories("$ENV{DXSDK_DIR}Lib/x86")
 include_directories("$ENV{DXSDK_DIR}Include")
 
-target_link_libraries(l4bhop PRIVATE d3dx9)
 target_link_libraries(l4bhop PRIVATE d3d9)
