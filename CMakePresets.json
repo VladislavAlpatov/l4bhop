@@ -6,7 +6,7 @@
             "hidden": true,
             "vendor": {
                 "jetbrains.com/clion": {
-                    "toolchain": "MinGW32_CLANG"
+                    "toolchain": "Visual Studio"
                 }
             },
             "generator": "Ninja",

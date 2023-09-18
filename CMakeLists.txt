@@ -1,16 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_CXX_STANDARD 23)
 
-if( NOT CMAKE_BUILD_TYPE MATCHES Release)
-    message(STATUS "Non release build, pdb file will be created")
-    add_compile_options(-gcodeview)
-    add_link_options(-fuse-ld=lld -Wl,--pdb=)
-else()
-    add_link_options(-static -s -pthread -fvisibility=hidden)
-    add_compile_options(-Os -fdata-sections -ffunction-sections)
-
-endif()
-
 
 project(l4bhop)
 
@@ -24,3 +14,10 @@ add_subdirectory(src/SDK)
 find_package(minhook CONFIG REQUIRED)
 target_link_libraries(l4bhop PRIVATE minhook::minhook)
 target_link_libraries(l4bhop PRIVATE d3dx9)
+
+
+link_directories("$ENV{DXSDK_DIR}Lib/x86")
+include_directories("$ENV{DXSDK_DIR}Include")
+
+target_link_libraries(l4bhop PRIVATE d3dx9)
+target_link_libraries(l4bhop PRIVATE d3d9)
