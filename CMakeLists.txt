@@ -10,9 +10,9 @@ set(CMAKE_SHARED_MODULE_PREFIX "")
 
 add_subdirectory(src/utils)
 add_subdirectory(src/SDK)
+add_subdirectory(extlibs/minhook)
 
-find_package(minhook CONFIG REQUIRED)
-target_link_libraries(l4bhop PRIVATE minhook::minhook)
+target_link_libraries(l4bhop PRIVATE minhook)
 
 
 link_directories("$ENV{DXSDK_DIR}Lib/x86")
